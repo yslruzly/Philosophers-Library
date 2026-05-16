@@ -427,7 +427,7 @@ function SignInForm({ onSuccess }: { onSuccess: (user: AuthUser) => void }) {
   return (
     <div>
       <div className="mb-5">
-        <h2 className="font-serif text-3xl font-medium mb-1 leading-tight" style={{ color: "#1a1206" }}>Welcome back</h2>
+        <h2 className="font-serif text-2xl sm:text-3xl font-medium mb-1 leading-tight" style={{ color: "#1a1206" }}>Welcome back</h2>
         <p className="text-sm" style={{ color: "#8a7860" }}>Sign in to continue your philosophical journey.</p>
       </div>
 
@@ -522,7 +522,7 @@ function SignUpForm({ onVerificationSent }: { onVerificationSent: (email: string
   return (
     <div>
       <div className="mb-5">
-        <h2 className="font-serif text-3xl font-medium mb-1 leading-tight" style={{ color: "#1a1206" }}>Begin your journey</h2>
+        <h2 className="font-serif text-2xl sm:text-3xl font-medium mb-1 leading-tight" style={{ color: "#1a1206" }}>Begin your journey</h2>
         <p className="text-sm" style={{ color: "#8a7860" }}>Join thousands exploring ancient wisdom.</p>
       </div>
 
@@ -636,7 +636,7 @@ function AuthPage({ onSuccess }: { onSuccess: (user: AuthUser) => void }) {
       </div>
 
       {/* Right form */}
-      <div className="flex-1 flex items-center justify-center p-8 overflow-y-auto min-h-screen" style={{ background: "#f6f2eb" }}>
+      <div className="flex-1 flex items-center justify-center px-4 py-8 sm:p-8 overflow-y-auto min-h-screen" style={{ background: "#f6f2eb" }}>
         <div className="w-full max-w-sm">
 
           {/* Tab switcher */}
@@ -657,7 +657,7 @@ function AuthPage({ onSuccess }: { onSuccess: (user: AuthUser) => void }) {
             </div>
           )}
 
-          <div className="rounded-xl p-7 border" style={{ background: "#fff", borderColor: "#e8e2d8", boxShadow: "0 4px 24px rgba(60,40,10,0.07)" }}>
+          <div className="rounded-xl p-5 sm:p-7 border" style={{ background: "#fff", borderColor: "#e8e2d8", boxShadow: "0 4px 24px rgba(60,40,10,0.07)" }}>
             {verifyEmail
               ? <VerifyEmailScreen email={verifyEmail} onBack={() => { setVerifyEmail(null); setTab("signin"); }} />
               : tab === "signin"
@@ -744,7 +744,7 @@ function PhilosopherCard({ id, onNavigate, index }: { id: PhilosopherId; onNavig
 
   return (
     <div ref={ref} onClick={() => onNavigate(id)}
-      className="relative flex flex-col gap-3 rounded-lg p-5 cursor-pointer overflow-hidden border transition-all duration-300"
+      className="relative flex flex-col gap-3 rounded-lg p-4 sm:p-5 cursor-pointer overflow-hidden border transition-all duration-300"
       style={{
         opacity: visible ? 1 : 0, transform: visible ? "translateY(0)" : "translateY(20px)",
         transition: `opacity 0.5s ease ${Math.min(index * 0.06, 0.4)}s, transform 0.5s ease ${Math.min(index * 0.06, 0.4)}s, box-shadow 0.2s, border-color 0.2s`,
@@ -793,7 +793,7 @@ function HomePage({ onNavigate, user, onSignOut }: { onNavigate: (id: Philosophe
   return (
     <div>
       {/* Hero */}
-      <section className="text-center py-20 px-8" style={{ maxWidth: "800px", margin: "0 auto" }}>
+      <section className="text-center py-12 sm:py-20 px-5 sm:px-8" style={{ maxWidth: "800px", margin: "0 auto" }}>
         <p className="text-xs tracking-widest uppercase mb-4 transition-all duration-700"
           style={{ color: "#8b6914", opacity: heroVisible ? 1 : 0, transform: heroVisible ? "translateY(0)" : "translateY(10px)" }}>
           Greek & Roman · Ancient Philosophy
@@ -815,7 +815,7 @@ function HomePage({ onNavigate, user, onSignOut }: { onNavigate: (id: Philosophe
       </section>
 
       {/* Search */}
-      <div className="max-w-md mx-auto mb-10 px-6">
+      <div className="max-w-md mx-auto mb-8 px-4 sm:px-6">
         <div className="relative flex items-center">
           <Search size={14} color="#b8a890" className="absolute left-4 pointer-events-none" />
           <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Search philosophers, schools…"
@@ -826,13 +826,13 @@ function HomePage({ onNavigate, user, onSignOut }: { onNavigate: (id: Philosophe
       </div>
 
       {/* Grid */}
-      <main className="max-w-6xl mx-auto px-6 pb-24">
+      <main className="max-w-6xl mx-auto px-4 sm:px-6 pb-24">
         <div className="text-xs tracking-widest uppercase mb-5" style={{ color: "#b8a890" }}>
           {filtered.length} philosopher{filtered.length !== 1 ? "s" : ""} · {QUOTES.length} aphorisms
         </div>
         {filtered.length === 0
           ? <div className="text-center py-20"><p className="font-serif text-2xl italic" style={{ color: "#b8a890" }}>No philosopher found.</p></div>
-          : <div className="grid gap-4" style={{ gridTemplateColumns: "repeat(auto-fill,minmax(280px,1fr))" }}>
+          : <div className="grid gap-4" style={{ gridTemplateColumns: "repeat(auto-fill,minmax(min(280px,100%),1fr))" }}>
               {filtered.map((id, i) => <PhilosopherCard key={id} id={id} onNavigate={onNavigate} index={i} />)}
             </div>
         }
@@ -847,7 +847,7 @@ function QuoteItem({ quote, index }: { quote: Quote; index: number }) {
   const ref = useRef<HTMLDivElement>(null);
   const visible = useIntersection(ref);
   return (
-    <div ref={ref} className="relative rounded p-5 border transition-all"
+    <div ref={ref} className="relative rounded p-4 sm:p-5 border transition-all"
       style={{ opacity: visible ? 1 : 0, transform: visible ? "translateX(0)" : "translateX(-12px)", transition: `opacity 0.45s ease ${Math.min(index * 0.04, 0.3)}s, transform 0.45s ease ${Math.min(index * 0.04, 0.3)}s`, background: "#fff", borderColor: "#eee8de" }}>
       <div className="font-serif text-5xl leading-none absolute top-1 left-3 pointer-events-none select-none" style={{ color: "#d4c4a8", opacity: 0.6 }}>"</div>
       <p className="font-serif italic leading-relaxed pl-4" style={{ fontSize: "clamp(1rem,1.8vw,1.1rem)", color: "#2c2418" }}>{quote.text}</p>
@@ -868,8 +868,8 @@ function PhilosopherPage({ id, onBack }: { id: PhilosopherId; onBack: () => void
   return (
     <div className="transition-all duration-400" style={{ opacity: pageVisible ? 1 : 0, transform: pageVisible ? "translateY(0)" : "translateY(12px)" }}>
       {/* Hero */}
-      <div className="border-b px-6 py-10" style={{ background: `linear-gradient(135deg,${p.color}14 0%,${p.color}06 60%,#f6f2eb 100%)`, borderColor: "#dfd7c9" }}>
-        <div className="max-w-5xl mx-auto">
+      <div className="border-b px-4 sm:px-6 py-8 sm:py-10" style={{ background: `linear-gradient(135deg,${p.color}14 0%,${p.color}06 60%,#f6f2eb 100%)`, borderColor: "#dfd7c9" }}>
+        <div className="max-w-5xl mx-auto px-0">
           <button onClick={onBack} className="flex items-center gap-1.5 mb-8 text-xs font-semibold tracking-widest uppercase transition-colors"
             style={{ background: "none", border: "none", cursor: "pointer", color: "#8a7860" }}
             onMouseEnter={e => (e.currentTarget.style.color = p.color)} onMouseLeave={e => (e.currentTarget.style.color = "#8a7860")}>
@@ -880,9 +880,9 @@ function PhilosopherPage({ id, onBack }: { id: PhilosopherId; onBack: () => void
               style={{ border: `2px solid ${p.color}55`, background: `${p.color}14` }}>
               <Icon size={26} color={p.color} strokeWidth={1.3} />
             </div>
-            <div className="flex-1 min-w-48">
+            <div className="flex-1 min-w-0">
               <div className="flex items-center gap-3 flex-wrap mb-1">
-                <h1 className="font-serif font-normal leading-none" style={{ fontSize: "clamp(2rem,5vw,3rem)", color: "#1a1206" }}>{p.label}</h1>
+                <h1 className="font-serif font-normal leading-none" style={{ fontSize: "clamp(1.6rem,5vw,3rem)", color: "#1a1206" }}>{p.label}</h1>
                 <SchoolBadge schoolId={p.school} />
               </div>
               <p className="text-xs tracking-widest uppercase font-semibold mb-1" style={{ color: p.color }}>{p.subtitle}</p>
@@ -893,7 +893,8 @@ function PhilosopherPage({ id, onBack }: { id: PhilosopherId; onBack: () => void
       </div>
 
       {/* Content */}
-      <div className="max-w-5xl mx-auto px-6 py-10 pb-24 grid gap-12" style={{ gridTemplateColumns: "1fr 300px" }}>
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 py-8 pb-24 grid gap-8 phil-grid" style={{ gridTemplateColumns: "1fr" }}>
+      <style>{`@media(min-width:768px){.phil-grid{grid-template-columns:1fr 300px!important}}`}</style>
         {/* Left */}
         <div>
           <h2 className="font-serif text-sm tracking-widest uppercase font-normal mb-7 flex items-center gap-2" style={{ color: "#8a7860" }}>
@@ -919,7 +920,7 @@ function PhilosopherPage({ id, onBack }: { id: PhilosopherId; onBack: () => void
         </div>
 
         {/* Sidebar */}
-        <div className="flex flex-col gap-4 sticky top-20 self-start">
+        <div className="flex flex-col gap-4 md:sticky md:top-20 self-start">
           <div className="rounded-lg p-5 border" style={{ background: "#fff", borderColor: "#e8e2d8", boxShadow: "0 1px 4px rgba(60,40,10,0.05)" }}>
             <p className="text-xs tracking-widest uppercase mb-3" style={{ color: "#b8a890" }}>Biography</p>
             <p className="font-serif text-sm leading-relaxed italic" style={{ color: "#4a3e2c" }}>{p.bio}</p>
@@ -953,8 +954,7 @@ function PhilosopherPage({ id, onBack }: { id: PhilosopherId; onBack: () => void
         </div>
       </div>
 
-      {/* Mobile sidebar override */}
-      <style>{`@media(max-width:768px){.max-w-5xl .grid{grid-template-columns:1fr!important}.sticky{position:static!important}}`}</style>
+      
     </div>
   );
 }
@@ -1055,7 +1055,7 @@ export default function App() {
 
         <div className="relative" style={{ zIndex: 1 }}>
           {/* Header */}
-          <header className="sticky top-0 border-b flex items-center justify-between px-6 py-4" style={{ background: "rgba(246,242,235,0.94)", backdropFilter: "blur(12px)", borderColor: "#dfd7c9", zIndex: 10 }}>
+          <header className="sticky top-0 border-b flex items-center justify-between px-3 sm:px-6 py-3 sm:py-4" style={{ background: "rgba(246,242,235,0.94)", backdropFilter: "blur(12px)", borderColor: "#dfd7c9", zIndex: 10 }}>
             <button onClick={goHome} className="flex items-center gap-2" style={{ background: "none", border: "none", cursor: "pointer", padding: 0 }}>
               <BookOpen size={16} color="#8b6914" strokeWidth={1.5} />
               <span className="text-xs tracking-widest uppercase font-semibold" style={{ color: "#8b6914" }}>Ancient Wisdom</span>
@@ -1073,7 +1073,7 @@ export default function App() {
             {/* User + sign out */}
             <div className="flex items-center gap-3">
               {!currentPhil && (
-                <span className="text-xs tracking-widest uppercase" style={{ color: "#b8a890" }}>{QUOTES.length} Aphorisms</span>
+                <span className="hidden sm:inline text-xs tracking-widest uppercase" style={{ color: "#b8a890" }}>{QUOTES.length} Aphorisms</span>
               )}
               {user && (
                 <div className="flex items-center gap-2">
