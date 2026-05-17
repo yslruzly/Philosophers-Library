@@ -2,7 +2,7 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import {
   BookOpen, Search, X, ArrowLeft, ArrowRight, ChevronRight,
   Feather, Flame, Wind, Compass, Anchor, Sun, Droplets, Star, Zap,
-  Eye, EyeOff, Check, AlertCircle, LogOut, User, Mail, RefreshCw,
+  Eye, EyeOff, Check, AlertCircle, LogOut, User, Mail, RefreshCw, Sparkles,
 } from "lucide-react";
 import {
   auth, googleProvider, firebaseError,
@@ -11,12 +11,13 @@ import {
   updateProfile, signOut, onAuthStateChanged,
   type User as FirebaseUser,
 } from "./firebase";
+import PhilosopherQuiz from "./PhilosopherQuiz";
 
 // ─── Types ─────────────────────────────────────────────────────────────────────
 
 type SchoolId = "stoic" | "platonic" | "peripatetic" | "cynic" | "socratic" | "presocratic";
 type PhilosopherId = "epictetus" | "aurelius" | "seneca" | "socrates" | "plato" | "aristotle" | "diogenes" | "heraclitus" | "pythagoras";
-type Page = "auth" | "home" | PhilosopherId;
+type Page = "auth" | "home" | "quiz" | PhilosopherId;
 
 interface School { label: string; color: string; }
 interface Philosopher {
@@ -780,7 +781,7 @@ function PhilosopherCard({ id, onNavigate, index }: { id: PhilosopherId; onNavig
 
 // ─── Library: Home Page ───────────────────────────────────────────────────────
 
-function HomePage({ onNavigate, user, onSignOut }: { onNavigate: (id: PhilosopherId) => void; user: AuthUser; onSignOut: () => void }) {
+function HomePage({ onNavigate, user, onSignOut, onNavigateQuiz }: { onNavigate: (id: PhilosopherId) => void; user: AuthUser; onSignOut: () => void; onNavigateQuiz: () => void }) {
   const [heroVisible, setHeroVisible] = useState(false);
   const [search, setSearch]           = useState("");
   useEffect(() => { const t = setTimeout(() => setHeroVisible(true), 80); return () => clearTimeout(t); }, []);
@@ -825,7 +826,39 @@ function HomePage({ onNavigate, user, onSignOut }: { onNavigate: (id: Philosophe
         </div>
       </div>
 
-      {/* Grid */}
+      {/* Quiz banner */}
+      <div
+        onClick={onNavigateQuiz}
+        style={{ maxWidth: "1200px", margin: "0 auto 2rem", padding: "0 1rem sm:0 1.5rem" }}
+      >
+        <div
+          className="mx-4 sm:mx-6 rounded-lg px-6 py-5 flex items-center justify-between gap-4 cursor-pointer border transition-all duration-200"
+          style={{ background: "linear-gradient(135deg,rgba(44,36,24,0.95),rgba(29,22,14,0.98))", borderColor: "rgba(201,168,76,0.2)", position: "relative", overflow: "hidden" }}
+          onMouseEnter={e => { e.currentTarget.style.borderColor = "rgba(201,168,76,0.5)"; e.currentTarget.style.transform = "translateY(-1px)"; }}
+          onMouseLeave={e => { e.currentTarget.style.borderColor = "rgba(201,168,76,0.2)"; e.currentTarget.style.transform = "none"; }}
+        >
+          <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "1px", background: "linear-gradient(to right,transparent,rgba(201,168,76,0.4),transparent)" }} />
+          <div style={{ position: "absolute", inset: 0, background: "radial-gradient(ellipse 60% 100% at 0% 50%,rgba(201,168,76,0.06),transparent)", pointerEvents: "none" }} />
+          <div className="flex items-center gap-4">
+            <div style={{ width: "42px", height: "42px", borderRadius: "50%", border: "1px solid rgba(201,168,76,0.3)", background: "rgba(201,168,76,0.1)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+              <Sparkles size={18} color="#c9a84c" strokeWidth={1.5} />
+            </div>
+            <div>
+              <p style={{ fontFamily: "'Lora',Georgia,serif", fontSize: "1.05rem", color: "#f4ede0", fontWeight: 400, marginBottom: "0.2rem" }}>
+                Which Ancient Philosopher Are You?
+              </p>
+              <p style={{ fontSize: "0.78rem", color: "rgba(201,168,76,0.6)", letterSpacing: "0.06em" }}>
+                Take the quiz · 12 questions · Discover your philosophical alignment
+              </p>
+            </div>
+          </div>
+          <div style={{ display: "flex", alignItems: "center", gap: "0.4rem", color: "#c9a84c", fontSize: "0.8rem", letterSpacing: "0.1em", textTransform: "uppercase", flexShrink: 0, fontFamily: "'Inter',sans-serif", fontWeight: 500 }}>
+            <span className="hidden sm:inline">Begin</span> <ArrowRight size={15} strokeWidth={2} />
+          </div>
+        </div>
+      </div>
+
+      {/* Philosopher grid */}
       <main className="max-w-6xl mx-auto px-4 sm:px-6 pb-24">
         <div className="text-xs tracking-widest uppercase mb-5" style={{ color: "#b8a890" }}>
           {filtered.length} philosopher{filtered.length !== 1 ? "s" : ""} · {QUOTES.length} aphorisms
@@ -986,6 +1019,11 @@ export default function App() {
     setPage("home");
   }, []);
 
+  const navigateToQuiz = useCallback(() => {
+    setPage("quiz");
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, []);
+
   const navigateTo = useCallback((id: PhilosopherId) => {
     setPage(id);
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -1002,7 +1040,7 @@ export default function App() {
     setPage("auth");
   }, []);
 
-  const isPhilPage  = page !== "auth" && page !== "home";
+  const isPhilPage  = page !== "auth" && page !== "home" && page !== "quiz";
   const currentPhil = isPhilPage ? PHILOSOPHERS[page as PhilosopherId] : null;
 
   // Show spinner while Firebase resolves the session
@@ -1062,11 +1100,13 @@ export default function App() {
             </button>
 
             {/* Breadcrumb */}
-            {currentPhil && (
+            {(currentPhil || page === "quiz") && (
               <div className="flex items-center gap-1 text-xs tracking-wide" style={{ color: "#b8a890" }}>
                 <span className="cursor-pointer underline decoration-[#ddd6c6]" onClick={goHome}>Home</span>
                 <ChevronRight size={11} />
-                <span className="font-semibold" style={{ color: currentPhil.color }}>{currentPhil.label}</span>
+                <span className="font-semibold" style={{ color: currentPhil ? currentPhil.color : "#c9a84c" }}>
+                  {currentPhil ? currentPhil.label : "Philosopher Quiz"}
+                </span>
               </div>
             )}
 
@@ -1094,7 +1134,9 @@ export default function App() {
 
           {/* Pages */}
           {page === "home"
-            ? <HomePage onNavigate={navigateTo} user={user!} onSignOut={handleSignOut} />
+            ? <HomePage onNavigate={navigateTo} user={user!} onSignOut={handleSignOut} onNavigateQuiz={navigateToQuiz} />
+            : page === "quiz"
+            ? <PhilosopherQuiz onBack={goHome} />
             : <PhilosopherPage id={page as PhilosopherId} onBack={goHome} />
           }
 
