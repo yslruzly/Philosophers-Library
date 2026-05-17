@@ -2,7 +2,7 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import {
   BookOpen, Search, X, ArrowLeft, ArrowRight, ChevronRight,
   Feather, Flame, Wind, Compass, Anchor, Sun, Droplets, Star, Zap,
-  Eye, EyeOff, Check, AlertCircle, LogOut, User, Mail, RefreshCw, Sparkles,
+  Eye, EyeOff, Check, AlertCircle, LogOut, User, Mail, RefreshCw,
 } from "lucide-react";
 import {
   auth, googleProvider, firebaseError,
@@ -841,7 +841,7 @@ function HomePage({ onNavigate, user, onSignOut, onNavigateQuiz }: { onNavigate:
           <div style={{ position: "absolute", inset: 0, background: "radial-gradient(ellipse 60% 100% at 0% 50%,rgba(201,168,76,0.06),transparent)", pointerEvents: "none" }} />
           <div className="flex items-center gap-4">
             <div style={{ width: "42px", height: "42px", borderRadius: "50%", border: "1px solid rgba(201,168,76,0.3)", background: "rgba(201,168,76,0.1)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
-              <Sparkles size={18} color="#c9a84c" strokeWidth={1.5} />
+              <Star size={18} color="#c9a84c" strokeWidth={1.5} />
             </div>
             <div>
               <p style={{ fontFamily: "'Lora',Georgia,serif", fontSize: "1.05rem", color: "#f4ede0", fontWeight: 400, marginBottom: "0.2rem" }}>
