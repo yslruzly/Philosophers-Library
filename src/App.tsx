@@ -12,12 +12,13 @@ import {
   type User as FirebaseUser,
 } from "./firebase";
 import PhilosopherQuiz from "./PhilosopherQuiz";
+import PhilosophyTimeline from "./PhilosophyTimeline";
 
 // ─── Types ─────────────────────────────────────────────────────────────────────
 
 type SchoolId = "stoic" | "platonic" | "peripatetic" | "cynic" | "socratic" | "presocratic";
 type PhilosopherId = "epictetus" | "aurelius" | "seneca" | "socrates" | "plato" | "aristotle" | "diogenes" | "heraclitus" | "pythagoras";
-type Page = "auth" | "home" | "quiz" | PhilosopherId;
+type Page = "auth" | "home" | "quiz" | "timeline" | PhilosopherId;
 
 interface School { label: string; color: string; }
 interface Philosopher {
@@ -781,7 +782,7 @@ function PhilosopherCard({ id, onNavigate, index }: { id: PhilosopherId; onNavig
 
 // ─── Library: Home Page ───────────────────────────────────────────────────────
 
-function HomePage({ onNavigate, user, onSignOut, onNavigateQuiz }: { onNavigate: (id: PhilosopherId) => void; user: AuthUser; onSignOut: () => void; onNavigateQuiz: () => void }) {
+function HomePage({ onNavigate, user, onSignOut, onNavigateQuiz, onNavigateTimeline }: { onNavigate: (id: PhilosopherId) => void; user: AuthUser; onSignOut: () => void; onNavigateQuiz: () => void; onNavigateTimeline: () => void }) {
   const [heroVisible, setHeroVisible] = useState(false);
   const [search, setSearch]           = useState("");
   useEffect(() => { const t = setTimeout(() => setHeroVisible(true), 80); return () => clearTimeout(t); }, []);
@@ -854,6 +855,34 @@ function HomePage({ onNavigate, user, onSignOut, onNavigateQuiz }: { onNavigate:
           </div>
           <div style={{ display: "flex", alignItems: "center", gap: "0.4rem", color: "#c9a84c", fontSize: "0.8rem", letterSpacing: "0.1em", textTransform: "uppercase", flexShrink: 0, fontFamily: "'Inter',sans-serif", fontWeight: 500 }}>
             <span className="hidden sm:inline">Begin</span> <ArrowRight size={15} strokeWidth={2} />
+          </div>
+        </div>
+      </div>
+
+      {/* Timeline banner */}
+      <div style={{ maxWidth: "1200px", margin: "0 auto 1.25rem", padding: "0 1rem" }}>
+        <div
+          onClick={onNavigateTimeline}
+          className="mx-4 sm:mx-6 rounded-lg px-6 py-4 flex items-center justify-between gap-4 cursor-pointer border transition-all duration-200"
+          style={{ background: "#ffffff", borderColor: "#e8e2d8", boxShadow: "0 1px 4px rgba(60,40,10,0.05)" }}
+          onMouseEnter={e => { e.currentTarget.style.borderColor = "#b8922a66"; e.currentTarget.style.boxShadow = "0 4px 16px rgba(60,40,10,0.09)"; e.currentTarget.style.transform = "translateY(-1px)"; }}
+          onMouseLeave={e => { e.currentTarget.style.borderColor = "#e8e2d8"; e.currentTarget.style.boxShadow = "0 1px 4px rgba(60,40,10,0.05)"; e.currentTarget.style.transform = "none"; }}
+        >
+          <div className="flex items-center gap-4">
+            <div style={{ width: "38px", height: "38px", borderRadius: "50%", border: "1.5px solid rgba(184,146,42,0.35)", background: "rgba(184,146,42,0.08)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+              <Star size={16} color="#b8922a" strokeWidth={1.5} />
+            </div>
+            <div>
+              <p style={{ fontFamily: "'Lora',Georgia,serif", fontSize: "1rem", color: "#2c2418", fontWeight: 500, marginBottom: "0.15rem" }}>
+                Philosophy Timeline
+              </p>
+              <p style={{ fontSize: "0.74rem", color: "#8a7860", letterSpacing: "0.04em" }}>
+                624 BC – 529 AD · 35 entries · From Thales to the fall of Rome
+              </p>
+            </div>
+          </div>
+          <div style={{ display: "flex", alignItems: "center", gap: "0.4rem", color: "#b8922a", fontSize: "0.74rem", letterSpacing: "0.1em", textTransform: "uppercase", flexShrink: 0, fontWeight: 500 }}>
+            <span className="hidden sm:inline">Explore</span> <ChevronRight size={15} strokeWidth={2} />
           </div>
         </div>
       </div>
@@ -1024,6 +1053,11 @@ export default function App() {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, []);
 
+  const navigateToTimeline = useCallback(() => {
+    setPage("timeline");
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, []);
+
   const navigateTo = useCallback((id: PhilosopherId) => {
     setPage(id);
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -1040,7 +1074,7 @@ export default function App() {
     setPage("auth");
   }, []);
 
-  const isPhilPage  = page !== "auth" && page !== "home" && page !== "quiz";
+  const isPhilPage  = page !== "auth" && page !== "home" && page !== "quiz" && page !== "timeline";
   const currentPhil = isPhilPage ? PHILOSOPHERS[page as PhilosopherId] : null;
 
   // Show spinner while Firebase resolves the session
@@ -1100,12 +1134,12 @@ export default function App() {
             </button>
 
             {/* Breadcrumb */}
-            {(currentPhil || page === "quiz") && (
+            {(currentPhil || page === "quiz" || page === "timeline") && (
               <div className="flex items-center gap-1 text-xs tracking-wide" style={{ color: "#b8a890" }}>
                 <span className="cursor-pointer underline decoration-[#ddd6c6]" onClick={goHome}>Home</span>
                 <ChevronRight size={11} />
-                <span className="font-semibold" style={{ color: currentPhil ? currentPhil.color : "#c9a84c" }}>
-                  {currentPhil ? currentPhil.label : "Philosopher Quiz"}
+                <span className="font-semibold" style={{ color: currentPhil ? currentPhil.color : "#b8922a" }}>
+                  {currentPhil ? currentPhil.label : page === "quiz" ? "Philosopher Quiz" : "Timeline"}
                 </span>
               </div>
             )}
@@ -1134,9 +1168,11 @@ export default function App() {
 
           {/* Pages */}
           {page === "home"
-            ? <HomePage onNavigate={navigateTo} user={user!} onSignOut={handleSignOut} onNavigateQuiz={navigateToQuiz} />
+            ? <HomePage onNavigate={navigateTo} user={user!} onSignOut={handleSignOut} onNavigateQuiz={navigateToQuiz} onNavigateTimeline={navigateToTimeline} />
             : page === "quiz"
             ? <PhilosopherQuiz onBack={goHome} />
+            : page === "timeline"
+            ? <PhilosophyTimeline onBack={goHome} />
             : <PhilosopherPage id={page as PhilosopherId} onBack={goHome} />
           }
 
