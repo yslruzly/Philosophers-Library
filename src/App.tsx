@@ -3,7 +3,7 @@ import {
   BookOpen, Search, X, ArrowLeft, ArrowRight, ChevronRight,
   Feather, Flame, Wind, Compass, Anchor, Sun, Droplets, Star, Zap,
   Eye, EyeOff, Check, AlertCircle, LogOut, User, Mail, RefreshCw,
-  Brain,
+  Brain, History,
 } from "lucide-react";
 import {
   auth, googleProvider, firebaseError,
@@ -871,7 +871,7 @@ function HomePage({ onNavigate, user, onSignOut, onNavigateQuiz, onNavigateTimel
         >
           <div className="flex items-center gap-4">
             <div style={{ width: "38px", height: "38px", borderRadius: "50%", border: "1.5px solid rgba(184,146,42,0.35)", background: "rgba(184,146,42,0.08)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
-              <Star size={16} color="#b8922a" strokeWidth={1.5} />
+              <History size={16} color="#b8922a" strokeWidth={1.5} />
             </div>
             <div>
               <p style={{ fontFamily: "'Lora',Georgia,serif", fontSize: "1rem", color: "#2c2418", fontWeight: 500, marginBottom: "0.15rem" }}>
