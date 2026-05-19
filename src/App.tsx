@@ -3,6 +3,7 @@ import {
   BookOpen, Search, X, ArrowLeft, ArrowRight, ChevronRight,
   Feather, Flame, Wind, Compass, Anchor, Sun, Droplets, Star, Zap,
   Eye, EyeOff, Check, AlertCircle, LogOut, User, Mail, RefreshCw,
+  Brain,
 } from "lucide-react";
 import {
   auth, googleProvider, firebaseError,
@@ -159,15 +160,15 @@ function PanelQuote() {
   const Icon = PHILOSOPHERS[q.philosopher].icon;
   return (
     <div className={`transition-all duration-500 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"}`}>
-      <div className="text-6xl leading-none text-white/10 font-serif mb-2 select-none">"</div>
-      <p className="font-serif text-lg leading-relaxed text-white/90 italic mb-6">{q.text}</p>
+      <div className="mb-2 font-serif text-6xl leading-none select-none text-white/10">"</div>
+      <p className="mb-6 font-serif text-lg italic leading-relaxed text-white/90">{q.text}</p>
       <div className="flex items-center gap-3">
-        <div className="w-7 h-7 rounded-full bg-white/10 flex items-center justify-center shrink-0">
+        <div className="flex items-center justify-center rounded-full w-7 h-7 bg-white/10 shrink-0">
           <Icon size={13} color="rgba(255,255,255,0.8)" strokeWidth={1.5} />
         </div>
         <div>
-          <div className="font-serif text-sm text-white/88 font-medium">{PHILOSOPHERS[q.philosopher].label}</div>
-          <div className="text-xs text-white/40 tracking-wide">{q.source}</div>
+          <div className="font-serif text-sm font-medium text-white/88">{PHILOSOPHERS[q.philosopher].label}</div>
+          <div className="text-xs tracking-wide text-white/40">{q.source}</div>
         </div>
       </div>
       <div className="flex gap-1 mt-7">
@@ -184,17 +185,17 @@ function PanelQuote() {
 
 function AuthLeftPanel() {
   return (
-    <div className="relative flex flex-col justify-between p-10 h-full overflow-hidden"
+    <div className="relative flex flex-col justify-between h-full p-10 overflow-hidden"
       style={{ background: "linear-gradient(150deg,#2c1f0e 0%,#3d2a12 45%,#2a1d0c 100%)" }}>
-      <div className="absolute -top-20 -right-20 w-72 h-72 rounded-full pointer-events-none"
+      <div className="absolute rounded-full pointer-events-none -top-20 -right-20 w-72 h-72"
         style={{ background: "radial-gradient(circle,rgba(201,169,110,0.13) 0%,transparent 70%)" }} />
-      <div className="absolute -bottom-16 -left-16 w-60 h-60 rounded-full pointer-events-none"
+      <div className="absolute rounded-full pointer-events-none -bottom-16 -left-16 w-60 h-60"
         style={{ background: "radial-gradient(circle,rgba(201,169,110,0.08) 0%,transparent 70%)" }} />
       <div className="absolute inset-0 pointer-events-none"
         style={{ backgroundImage: "linear-gradient(rgba(255,255,255,0.018) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.018) 1px,transparent 1px)", backgroundSize: "40px 40px" }} />
       {/* Logo */}
       <div className="relative z-10 flex items-center gap-3">
-        <div className="w-8 h-8 rounded-lg flex items-center justify-center"
+        <div className="flex items-center justify-center w-8 h-8 rounded-lg"
           style={{ background: "rgba(201,169,110,0.18)", border: "1px solid rgba(201,169,110,0.28)" }}>
           <BookOpen size={15} color="#c9a96e" strokeWidth={1.5} />
         </div>
@@ -208,7 +209,7 @@ function AuthLeftPanel() {
       {/* Footer */}
       <div className="relative z-10">
         <div className="h-px mb-4" style={{ background: "rgba(255,255,255,0.07)" }} />
-        <p className="text-xs tracking-wide leading-relaxed" style={{ color: "rgba(255,255,255,0.25)" }}>
+        <p className="text-xs leading-relaxed tracking-wide" style={{ color: "rgba(255,255,255,0.25)" }}>
           9 philosophers · 72 aphorisms · Ancient wisdom for modern minds
         </p>
       </div>
@@ -231,7 +232,7 @@ function Field({ label, type = "text", value, onChange, placeholder, error, icon
       <label className="text-xs font-semibold tracking-widest uppercase transition-colors"
         style={{ color: focused ? "#5a3e10" : "#8a7860" }}>{label}</label>
       <div className="relative flex items-center">
-        {icon && <div className="absolute left-3 pointer-events-none flex transition-colors"
+        {icon && <div className="absolute flex transition-colors pointer-events-none left-3"
           style={{ color: focused ? "#9c5c1a" : "#c0a880" }}>{icon}</div>}
         <input
           type={type} value={value}
@@ -239,7 +240,7 @@ function Field({ label, type = "text", value, onChange, placeholder, error, icon
           placeholder={placeholder}
           onFocus={() => setFocused(true)}
           onBlur={() => setFocused(false)}
-          className="w-full rounded-lg text-sm transition-all"
+          className="w-full text-sm transition-all rounded-lg"
           style={{
             padding: icon ? "0.7rem 2.5rem 0.7rem 2.35rem" : "0.7rem 2.5rem 0.7rem 0.85rem",
             fontFamily: "inherit", color: "#2c2418",
@@ -308,7 +309,7 @@ const ShieldIconSvg = <svg width="15" height="15" viewBox="0 0 24 24" fill="none
 function GoogleButton({ onClick, loading }: { onClick: () => void; loading: boolean }) {
   return (
     <button onClick={onClick} disabled={loading}
-      className="flex items-center justify-center gap-2 w-full py-3 rounded-lg text-sm font-medium border transition-colors disabled:opacity-60"
+      className="flex items-center justify-center w-full gap-2 py-3 text-sm font-medium transition-colors border rounded-lg disabled:opacity-60"
       style={{ background: "#faf7f2", borderColor: "#e0d8cc", color: "#4a3e2c", cursor: loading ? "not-allowed" : "pointer" }}
       onMouseEnter={e => { if (!loading) e.currentTarget.style.background = "#f5f0e8"; }}
       onMouseLeave={e => { e.currentTarget.style.background = "#faf7f2"; }}>
@@ -354,7 +355,7 @@ function FormSuccess({ message }: { message: string }) {
 function PrimaryButton({ onClick, loading, children }: { onClick: () => void; loading: boolean; children: React.ReactNode }) {
   return (
     <button onClick={onClick} disabled={loading}
-      className="flex items-center justify-center gap-2 w-full py-3 rounded-lg text-white text-sm font-semibold tracking-wide mt-5 transition-all disabled:opacity-70"
+      className="flex items-center justify-center w-full gap-2 py-3 mt-5 text-sm font-semibold tracking-wide text-white transition-all rounded-lg disabled:opacity-70"
       style={{ background: "linear-gradient(135deg,#9c5c1a,#7a4010)", boxShadow: "0 2px 12px rgba(156,92,26,0.28)", cursor: loading ? "not-allowed" : "pointer" }}>
       {loading
         ? <><RefreshCw size={14} className="animate-spin" /> Please wait…</>
@@ -429,7 +430,7 @@ function SignInForm({ onSuccess }: { onSuccess: (user: AuthUser) => void }) {
   return (
     <div>
       <div className="mb-5">
-        <h2 className="font-serif text-2xl sm:text-3xl font-medium mb-1 leading-tight" style={{ color: "#1a1206" }}>Welcome back</h2>
+        <h2 className="mb-1 font-serif text-2xl font-medium leading-tight sm:text-3xl" style={{ color: "#1a1206" }}>Welcome back</h2>
         <p className="text-sm" style={{ color: "#8a7860" }}>Sign in to continue your philosophical journey.</p>
       </div>
 
@@ -524,7 +525,7 @@ function SignUpForm({ onVerificationSent }: { onVerificationSent: (email: string
   return (
     <div>
       <div className="mb-5">
-        <h2 className="font-serif text-2xl sm:text-3xl font-medium mb-1 leading-tight" style={{ color: "#1a1206" }}>Begin your journey</h2>
+        <h2 className="mb-1 font-serif text-2xl font-medium leading-tight sm:text-3xl" style={{ color: "#1a1206" }}>Begin your journey</h2>
         <p className="text-sm" style={{ color: "#8a7860" }}>Join thousands exploring ancient wisdom.</p>
       </div>
 
@@ -599,20 +600,20 @@ function VerifyEmailScreen({ email, onBack }: { email: string; onBack: () => voi
   };
 
   return (
-    <div className="text-center py-4">
-      <div className="w-14 h-14 rounded-full flex items-center justify-center mx-auto mb-4"
+    <div className="py-4 text-center">
+      <div className="flex items-center justify-center mx-auto mb-4 rounded-full w-14 h-14"
         style={{ background: "#9c5c1a18", border: "2px solid #9c5c1a44" }}>
         <Mail size={24} color="#9c5c1a" strokeWidth={1.5} />
       </div>
-      <h2 className="font-serif text-2xl font-medium mb-2" style={{ color: "#1a1206" }}>Check your inbox</h2>
-      <p className="text-sm mb-1" style={{ color: "#8a7860" }}>A verification link was sent to:</p>
-      <p className="text-sm font-semibold mb-4" style={{ color: "#4a3e2c" }}>{email}</p>
-      <p className="text-xs leading-relaxed mb-6" style={{ color: "#a8977e" }}>
+      <h2 className="mb-2 font-serif text-2xl font-medium" style={{ color: "#1a1206" }}>Check your inbox</h2>
+      <p className="mb-1 text-sm" style={{ color: "#8a7860" }}>A verification link was sent to:</p>
+      <p className="mb-4 text-sm font-semibold" style={{ color: "#4a3e2c" }}>{email}</p>
+      <p className="mb-6 text-xs leading-relaxed" style={{ color: "#a8977e" }}>
         Click the link in the email to verify your account, then come back and sign in.
       </p>
       {resent
-        ? <p className="text-xs mb-4" style={{ color: "#3d7a55" }}>✓ Verification email resent!</p>
-        : <button onClick={handleResend} className="text-xs font-medium mb-4 block mx-auto"
+        ? <p className="mb-4 text-xs" style={{ color: "#3d7a55" }}>✓ Verification email resent!</p>
+        : <button onClick={handleResend} className="block mx-auto mb-4 text-xs font-medium"
             style={{ background: "none", border: "none", cursor: "pointer", color: "#9c5c1a" }}>
             Didn't get it? Resend email
           </button>
@@ -631,22 +632,22 @@ function AuthPage({ onSuccess }: { onSuccess: (user: AuthUser) => void }) {
   const [verifyEmail, setVerifyEmail] = useState<string | null>(null);
 
   return (
-    <div className="min-h-screen flex" style={{ fontFamily: "'Inter', sans-serif" }}>
+    <div className="flex min-h-screen" style={{ fontFamily: "'Inter', sans-serif" }}>
       {/* Left panel — hidden on mobile */}
       <div className="hidden md:block w-[42%] shrink-0 min-h-screen">
         <AuthLeftPanel />
       </div>
 
       {/* Right form */}
-      <div className="flex-1 flex items-center justify-center px-4 py-8 sm:p-8 overflow-y-auto min-h-screen" style={{ background: "#f6f2eb" }}>
+      <div className="flex items-center justify-center flex-1 min-h-screen px-4 py-8 overflow-y-auto sm:p-8" style={{ background: "#f6f2eb" }}>
         <div className="w-full max-w-sm">
 
           {/* Tab switcher */}
           {!verifyEmail && (
-            <div className="flex rounded-lg p-1 mb-4 gap-1" style={{ background: "#ede8e0" }}>
+            <div className="flex gap-1 p-1 mb-4 rounded-lg" style={{ background: "#ede8e0" }}>
               {(["signin", "signup"] as const).map(t => (
                 <button key={t} onClick={() => setTab(t)}
-                  className="flex-1 py-2 rounded-md text-xs font-semibold transition-all"
+                  className="flex-1 py-2 text-xs font-semibold transition-all rounded-md"
                   style={{
                     background: tab === t ? "#fff" : "transparent",
                     color: tab === t ? "#2c2418" : "#8a7860",
@@ -659,7 +660,7 @@ function AuthPage({ onSuccess }: { onSuccess: (user: AuthUser) => void }) {
             </div>
           )}
 
-          <div className="rounded-xl p-5 sm:p-7 border" style={{ background: "#fff", borderColor: "#e8e2d8", boxShadow: "0 4px 24px rgba(60,40,10,0.07)" }}>
+          <div className="p-5 border rounded-xl sm:p-7" style={{ background: "#fff", borderColor: "#e8e2d8", boxShadow: "0 4px 24px rgba(60,40,10,0.07)" }}>
             {verifyEmail
               ? <VerifyEmailScreen email={verifyEmail} onBack={() => { setVerifyEmail(null); setTab("signin"); }} />
               : tab === "signin"
@@ -668,7 +669,7 @@ function AuthPage({ onSuccess }: { onSuccess: (user: AuthUser) => void }) {
             }
           </div>
 
-          <p className="text-center mt-5 text-xs tracking-wide" style={{ color: "#b8a890" }}>
+          <p className="mt-5 text-xs tracking-wide text-center" style={{ color: "#b8a890" }}>
             The Philosopher's Library · Ancient Wisdom for Modern Minds
           </p>
         </div>
@@ -724,7 +725,7 @@ function QuotePreview({ philId, color }: { philId: PhilosopherId; color: string 
       </div>
       {/* Quote text */}
       <div className="transition-all duration-300" style={{ opacity: fading ? 0 : 1, transform: fading ? "translateY(4px)" : "translateY(0)" }}>
-        <p className="font-serif text-sm leading-relaxed italic overflow-hidden" style={{ color: "#4a3e2c", display: "-webkit-box", WebkitLineClamp: 3, WebkitBoxOrient: "vertical" }}>
+        <p className="overflow-hidden font-serif text-sm italic leading-relaxed" style={{ color: "#4a3e2c", display: "-webkit-box", WebkitLineClamp: 3, WebkitBoxOrient: "vertical" }}>
           <span className="not-italic text-xl leading-none align-[-0.2em] mr-0.5" style={{ color, opacity: 0.4 }}>"</span>
           {quote.text}
           <span className="not-italic text-xl leading-none align-[-0.2em] ml-0.5" style={{ color, opacity: 0.4 }}>"</span>
@@ -746,7 +747,7 @@ function PhilosopherCard({ id, onNavigate, index }: { id: PhilosopherId; onNavig
 
   return (
     <div ref={ref} onClick={() => onNavigate(id)}
-      className="relative flex flex-col gap-3 rounded-lg p-4 sm:p-5 cursor-pointer overflow-hidden border transition-all duration-300"
+      className="relative flex flex-col gap-3 p-4 overflow-hidden transition-all duration-300 border rounded-lg cursor-pointer sm:p-5"
       style={{
         opacity: visible ? 1 : 0, transform: visible ? "translateY(0)" : "translateY(20px)",
         transition: `opacity 0.5s ease ${Math.min(index * 0.06, 0.4)}s, transform 0.5s ease ${Math.min(index * 0.06, 0.4)}s, box-shadow 0.2s, border-color 0.2s`,
@@ -757,7 +758,7 @@ function PhilosopherCard({ id, onNavigate, index }: { id: PhilosopherId; onNavig
     >
       <div className="absolute top-0 left-0 right-0 h-[3px] opacity-75" style={{ background: p.color }} />
       <div className="flex items-start justify-between">
-        <div className="w-10 h-10 rounded-full flex items-center justify-center"
+        <div className="flex items-center justify-center w-10 h-10 rounded-full"
           style={{ border: `1.5px solid ${p.color}55`, background: `${p.color}12` }}>
           <Icon size={16} color={p.color} strokeWidth={1.5} />
         </div>
@@ -767,12 +768,12 @@ function PhilosopherCard({ id, onNavigate, index }: { id: PhilosopherId; onNavig
         <div className="font-serif text-xl mb-0.5" style={{ color: "#1a1206" }}>{p.label}</div>
         <div className="text-xs tracking-widest uppercase" style={{ color: "#a8977e" }}>{p.subtitle}</div>
       </div>
-      <div className="border-t pt-3 pb-2" style={{ borderColor: "#f5f0e8" }}>
+      <div className="pt-3 pb-2 border-t" style={{ borderColor: "#f5f0e8" }}>
         <QuotePreview philId={id} color={p.color} />
       </div>
       <div className="flex items-center justify-between pt-2 border-t" style={{ borderColor: "#f0ebe3" }}>
         <span className="text-xs tracking-wide" style={{ color: "#b8a890" }}>{p.years} · {count} quotes</span>
-        <div className="flex items-center gap-1 text-xs tracking-widest uppercase font-semibold" style={{ color: p.color }}>
+        <div className="flex items-center gap-1 text-xs font-semibold tracking-widest uppercase" style={{ color: p.color }}>
           View works <ChevronRight size={12} strokeWidth={2} />
         </div>
       </div>
@@ -795,8 +796,8 @@ function HomePage({ onNavigate, user, onSignOut, onNavigateQuiz, onNavigateTimel
   return (
     <div>
       {/* Hero */}
-      <section className="text-center py-12 sm:py-20 px-5 sm:px-8" style={{ maxWidth: "800px", margin: "0 auto" }}>
-        <p className="text-xs tracking-widest uppercase mb-4 transition-all duration-700"
+      <section className="px-5 py-12 text-center sm:py-20 sm:px-8" style={{ maxWidth: "800px", margin: "0 auto" }}>
+        <p className="mb-4 text-xs tracking-widest uppercase transition-all duration-700"
           style={{ color: "#8b6914", opacity: heroVisible ? 1 : 0, transform: heroVisible ? "translateY(0)" : "translateY(10px)" }}>
           Greek & Roman · Ancient Philosophy
         </p>
@@ -804,7 +805,7 @@ function HomePage({ onNavigate, user, onSignOut, onNavigateQuiz, onNavigateTimel
           style={{ fontSize: "clamp(2.8rem,7vw,4.8rem)", color: "#1a1206", opacity: heroVisible ? 1 : 0, transform: heroVisible ? "translateY(0)" : "translateY(16px)", transitionDelay: "0.1s" }}>
           The Philosopher's<br /><em style={{ color: "#8b6914" }}>Library</em>
         </h1>
-        <p className="font-serif italic leading-relaxed mt-6 transition-all duration-800"
+        <p className="mt-6 font-serif italic leading-relaxed transition-all duration-800"
           style={{ fontSize: "1.05rem", color: "#7a6e5a", maxWidth: "540px", margin: "1.5rem auto 0", opacity: heroVisible ? 1 : 0, transitionDelay: "0.25s" }}>
           From the symposia of Athens to the courts of Rome — words that have outlived empires.
         </p>
@@ -817,13 +818,13 @@ function HomePage({ onNavigate, user, onSignOut, onNavigateQuiz, onNavigateTimel
       </section>
 
       {/* Search */}
-      <div className="max-w-md mx-auto mb-8 px-4 sm:px-6">
+      <div className="max-w-md px-4 mx-auto mb-8 sm:px-6">
         <div className="relative flex items-center">
-          <Search size={14} color="#b8a890" className="absolute left-4 pointer-events-none" />
+          <Search size={14} color="#b8a890" className="absolute pointer-events-none left-4" />
           <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Search philosophers, schools…"
-            className="w-full rounded-full text-sm"
+            className="w-full text-sm rounded-full"
             style={{ padding: "0.55rem 2.4rem 0.55rem 2.5rem", background: "#fff", border: "1.5px solid #ddd6c6", color: "#2c2418", outline: "none", boxShadow: "0 1px 4px rgba(60,40,10,0.06)", fontFamily: "inherit" }} />
-          {search && <button onClick={() => setSearch("")} className="absolute right-4 flex" style={{ background: "none", border: "none", cursor: "pointer" }}><X size={13} color="#b8a890" /></button>}
+          {search && <button onClick={() => setSearch("")} className="absolute flex right-4" style={{ background: "none", border: "none", cursor: "pointer" }}><X size={13} color="#b8a890" /></button>}
         </div>
       </div>
 
@@ -833,7 +834,7 @@ function HomePage({ onNavigate, user, onSignOut, onNavigateQuiz, onNavigateTimel
         style={{ maxWidth: "1200px", margin: "0 auto 2rem", padding: "0 1rem sm:0 1.5rem" }}
       >
         <div
-          className="mx-4 sm:mx-6 rounded-lg px-6 py-5 flex items-center justify-between gap-4 cursor-pointer border transition-all duration-200"
+          className="flex items-center justify-between gap-4 px-6 py-5 mx-4 transition-all duration-200 border rounded-lg cursor-pointer sm:mx-6"
           style={{ background: "linear-gradient(135deg,rgba(44,36,24,0.95),rgba(29,22,14,0.98))", borderColor: "rgba(201,168,76,0.2)", position: "relative", overflow: "hidden" }}
           onMouseEnter={e => { e.currentTarget.style.borderColor = "rgba(201,168,76,0.5)"; e.currentTarget.style.transform = "translateY(-1px)"; }}
           onMouseLeave={e => { e.currentTarget.style.borderColor = "rgba(201,168,76,0.2)"; e.currentTarget.style.transform = "none"; }}
@@ -842,7 +843,7 @@ function HomePage({ onNavigate, user, onSignOut, onNavigateQuiz, onNavigateTimel
           <div style={{ position: "absolute", inset: 0, background: "radial-gradient(ellipse 60% 100% at 0% 50%,rgba(201,168,76,0.06),transparent)", pointerEvents: "none" }} />
           <div className="flex items-center gap-4">
             <div style={{ width: "42px", height: "42px", borderRadius: "50%", border: "1px solid rgba(201,168,76,0.3)", background: "rgba(201,168,76,0.1)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
-              <Star size={18} color="#c9a84c" strokeWidth={1.5} />
+              <Brain size={18} color="#c9a84c" strokeWidth={1.5} />
             </div>
             <div>
               <p style={{ fontFamily: "'Lora',Georgia,serif", fontSize: "1.05rem", color: "#f4ede0", fontWeight: 400, marginBottom: "0.2rem" }}>
@@ -863,7 +864,7 @@ function HomePage({ onNavigate, user, onSignOut, onNavigateQuiz, onNavigateTimel
       <div style={{ maxWidth: "1200px", margin: "0 auto 1.25rem", padding: "0 1rem" }}>
         <div
           onClick={onNavigateTimeline}
-          className="mx-4 sm:mx-6 rounded-lg px-6 py-4 flex items-center justify-between gap-4 cursor-pointer border transition-all duration-200"
+          className="flex items-center justify-between gap-4 px-6 py-4 mx-4 transition-all duration-200 border rounded-lg cursor-pointer sm:mx-6"
           style={{ background: "#ffffff", borderColor: "#e8e2d8", boxShadow: "0 1px 4px rgba(60,40,10,0.05)" }}
           onMouseEnter={e => { e.currentTarget.style.borderColor = "#b8922a66"; e.currentTarget.style.boxShadow = "0 4px 16px rgba(60,40,10,0.09)"; e.currentTarget.style.transform = "translateY(-1px)"; }}
           onMouseLeave={e => { e.currentTarget.style.borderColor = "#e8e2d8"; e.currentTarget.style.boxShadow = "0 1px 4px rgba(60,40,10,0.05)"; e.currentTarget.style.transform = "none"; }}
@@ -888,12 +889,12 @@ function HomePage({ onNavigate, user, onSignOut, onNavigateQuiz, onNavigateTimel
       </div>
 
       {/* Philosopher grid */}
-      <main className="max-w-6xl mx-auto px-4 sm:px-6 pb-24">
-        <div className="text-xs tracking-widest uppercase mb-5" style={{ color: "#b8a890" }}>
+      <main className="max-w-6xl px-4 pb-24 mx-auto sm:px-6">
+        <div className="mb-5 text-xs tracking-widest uppercase" style={{ color: "#b8a890" }}>
           {filtered.length} philosopher{filtered.length !== 1 ? "s" : ""} · {QUOTES.length} aphorisms
         </div>
         {filtered.length === 0
-          ? <div className="text-center py-20"><p className="font-serif text-2xl italic" style={{ color: "#b8a890" }}>No philosopher found.</p></div>
+          ? <div className="py-20 text-center"><p className="font-serif text-2xl italic" style={{ color: "#b8a890" }}>No philosopher found.</p></div>
           : <div className="grid gap-4" style={{ gridTemplateColumns: "repeat(auto-fill,minmax(min(280px,100%),1fr))" }}>
               {filtered.map((id, i) => <PhilosopherCard key={id} id={id} onNavigate={onNavigate} index={i} />)}
             </div>
@@ -909,10 +910,10 @@ function QuoteItem({ quote, index }: { quote: Quote; index: number }) {
   const ref = useRef<HTMLDivElement>(null);
   const visible = useIntersection(ref);
   return (
-    <div ref={ref} className="relative rounded p-4 sm:p-5 border transition-all"
+    <div ref={ref} className="relative p-4 transition-all border rounded sm:p-5"
       style={{ opacity: visible ? 1 : 0, transform: visible ? "translateX(0)" : "translateX(-12px)", transition: `opacity 0.45s ease ${Math.min(index * 0.04, 0.3)}s, transform 0.45s ease ${Math.min(index * 0.04, 0.3)}s`, background: "#fff", borderColor: "#eee8de" }}>
-      <div className="font-serif text-5xl leading-none absolute top-1 left-3 pointer-events-none select-none" style={{ color: "#d4c4a8", opacity: 0.6 }}>"</div>
-      <p className="font-serif italic leading-relaxed pl-4" style={{ fontSize: "clamp(1rem,1.8vw,1.1rem)", color: "#2c2418" }}>{quote.text}</p>
+      <div className="absolute font-serif text-5xl leading-none pointer-events-none select-none top-1 left-3" style={{ color: "#d4c4a8", opacity: 0.6 }}>"</div>
+      <p className="pl-4 font-serif italic leading-relaxed" style={{ fontSize: "clamp(1rem,1.8vw,1.1rem)", color: "#2c2418" }}>{quote.text}</p>
     </div>
   );
 }
@@ -930,24 +931,24 @@ function PhilosopherPage({ id, onBack }: { id: PhilosopherId; onBack: () => void
   return (
     <div className="transition-all duration-400" style={{ opacity: pageVisible ? 1 : 0, transform: pageVisible ? "translateY(0)" : "translateY(12px)" }}>
       {/* Hero */}
-      <div className="border-b px-4 sm:px-6 py-8 sm:py-10" style={{ background: `linear-gradient(135deg,${p.color}14 0%,${p.color}06 60%,#f6f2eb 100%)`, borderColor: "#dfd7c9" }}>
-        <div className="max-w-5xl mx-auto px-0">
+      <div className="px-4 py-8 border-b sm:px-6 sm:py-10" style={{ background: `linear-gradient(135deg,${p.color}14 0%,${p.color}06 60%,#f6f2eb 100%)`, borderColor: "#dfd7c9" }}>
+        <div className="max-w-5xl px-0 mx-auto">
           <button onClick={onBack} className="flex items-center gap-1.5 mb-8 text-xs font-semibold tracking-widest uppercase transition-colors"
             style={{ background: "none", border: "none", cursor: "pointer", color: "#8a7860" }}
             onMouseEnter={e => (e.currentTarget.style.color = p.color)} onMouseLeave={e => (e.currentTarget.style.color = "#8a7860")}>
             <ArrowLeft size={14} strokeWidth={1.8} /> All Philosophers
           </button>
-          <div className="flex items-start gap-6 flex-wrap">
-            <div className="w-16 h-16 rounded-full flex items-center justify-center shrink-0"
+          <div className="flex flex-wrap items-start gap-6">
+            <div className="flex items-center justify-center w-16 h-16 rounded-full shrink-0"
               style={{ border: `2px solid ${p.color}55`, background: `${p.color}14` }}>
               <Icon size={26} color={p.color} strokeWidth={1.3} />
             </div>
             <div className="flex-1 min-w-0">
-              <div className="flex items-center gap-3 flex-wrap mb-1">
+              <div className="flex flex-wrap items-center gap-3 mb-1">
                 <h1 className="font-serif font-normal leading-none" style={{ fontSize: "clamp(1.6rem,5vw,3rem)", color: "#1a1206" }}>{p.label}</h1>
                 <SchoolBadge schoolId={p.school} />
               </div>
-              <p className="text-xs tracking-widest uppercase font-semibold mb-1" style={{ color: p.color }}>{p.subtitle}</p>
+              <p className="mb-1 text-xs font-semibold tracking-widest uppercase" style={{ color: p.color }}>{p.subtitle}</p>
               <p className="text-xs tracking-wide" style={{ color: "#b8a890" }}>{p.years}</p>
             </div>
           </div>
@@ -955,22 +956,22 @@ function PhilosopherPage({ id, onBack }: { id: PhilosopherId; onBack: () => void
       </div>
 
       {/* Content */}
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 py-8 pb-24 grid gap-8 phil-grid" style={{ gridTemplateColumns: "1fr" }}>
+      <div className="grid max-w-5xl gap-8 px-4 py-8 pb-24 mx-auto sm:px-6 phil-grid" style={{ gridTemplateColumns: "1fr" }}>
       <style>{`@media(min-width:768px){.phil-grid{grid-template-columns:1fr 300px!important}}`}</style>
         {/* Left */}
         <div>
-          <h2 className="font-serif text-sm tracking-widest uppercase font-normal mb-7 flex items-center gap-2" style={{ color: "#8a7860" }}>
+          <h2 className="flex items-center gap-2 font-serif text-sm font-normal tracking-widest uppercase mb-7" style={{ color: "#8a7860" }}>
             <BookOpen size={14} color="#c4ab85" strokeWidth={1.5} /> Works & Aphorisms
           </h2>
           {Object.entries(workMap).map(([work, quotes], i) => {
             const ref = useRef<HTMLDivElement>(null);
             const visible = useIntersection(ref);
             return (
-              <div key={work} ref={ref} className="mb-11 transition-all"
+              <div key={work} ref={ref} className="transition-all mb-11"
                 style={{ opacity: visible ? 1 : 0, transform: visible ? "translateY(0)" : "translateY(16px)", transition: `opacity 0.5s ease ${i * 0.08}s, transform 0.5s ease ${i * 0.08}s` }}>
                 <div className="flex items-center gap-3 mb-4">
                   <div className="w-[3px] h-5 rounded-full shrink-0" style={{ background: p.color, opacity: 0.7 }} />
-                  <h3 className="font-serif text-xl font-normal italic" style={{ color: "#1a1206" }}>{work}</h3>
+                  <h3 className="font-serif text-xl italic font-normal" style={{ color: "#1a1206" }}>{work}</h3>
                   <span className="text-xs tracking-widest rounded px-2 py-0.5" style={{ color: "#b8a890", background: "#f0ebe3" }}>{quotes.length} quote{quotes.length !== 1 ? "s" : ""}</span>
                 </div>
                 <div className="flex flex-col gap-3">
@@ -982,13 +983,13 @@ function PhilosopherPage({ id, onBack }: { id: PhilosopherId; onBack: () => void
         </div>
 
         {/* Sidebar */}
-        <div className="flex flex-col gap-4 md:sticky md:top-20 self-start">
-          <div className="rounded-lg p-5 border" style={{ background: "#fff", borderColor: "#e8e2d8", boxShadow: "0 1px 4px rgba(60,40,10,0.05)" }}>
-            <p className="text-xs tracking-widest uppercase mb-3" style={{ color: "#b8a890" }}>Biography</p>
-            <p className="font-serif text-sm leading-relaxed italic" style={{ color: "#4a3e2c" }}>{p.bio}</p>
+        <div className="flex flex-col self-start gap-4 md:sticky md:top-20">
+          <div className="p-5 border rounded-lg" style={{ background: "#fff", borderColor: "#e8e2d8", boxShadow: "0 1px 4px rgba(60,40,10,0.05)" }}>
+            <p className="mb-3 text-xs tracking-widest uppercase" style={{ color: "#b8a890" }}>Biography</p>
+            <p className="font-serif text-sm italic leading-relaxed" style={{ color: "#4a3e2c" }}>{p.bio}</p>
           </div>
-          <div className="rounded-lg p-5 border" style={{ background: "#fff", borderColor: "#e8e2d8", boxShadow: "0 1px 4px rgba(60,40,10,0.05)" }}>
-            <p className="text-xs tracking-widest uppercase mb-3" style={{ color: "#b8a890" }}>Vital Facts</p>
+          <div className="p-5 border rounded-lg" style={{ background: "#fff", borderColor: "#e8e2d8", boxShadow: "0 1px 4px rgba(60,40,10,0.05)" }}>
+            <p className="mb-3 text-xs tracking-widest uppercase" style={{ color: "#b8a890" }}>Vital Facts</p>
             {[
               { label: "Born", value: p.born },
               { label: "Died", value: p.died },
@@ -1002,13 +1003,13 @@ function PhilosopherPage({ id, onBack }: { id: PhilosopherId; onBack: () => void
               </div>
             ))}
           </div>
-          <div className="rounded-lg p-5 border" style={{ background: "#fff", borderColor: "#e8e2d8", boxShadow: "0 1px 4px rgba(60,40,10,0.05)" }}>
-            <p className="text-xs tracking-widest uppercase mb-3" style={{ color: "#b8a890" }}>Works</p>
+          <div className="p-5 border rounded-lg" style={{ background: "#fff", borderColor: "#e8e2d8", boxShadow: "0 1px 4px rgba(60,40,10,0.05)" }}>
+            <p className="mb-3 text-xs tracking-widest uppercase" style={{ color: "#b8a890" }}>Works</p>
             {p.works.map(w => (
               <div key={w} className="flex items-center gap-2 py-1.5 border-b" style={{ borderColor: "#f5f0e8" }}>
                 <div className="w-1.5 h-1.5 rounded-full shrink-0" style={{ background: p.color, opacity: 0.6 }} />
                 <span className="font-serif text-sm" style={{ color: workMap[w] ? "#2c2418" : "#c0b49a", fontStyle: workMap[w] ? "italic" : "normal" }}>
-                  {w} {workMap[w] && <span className="text-xs ml-1" style={{ color: p.color }}>({workMap[w].length})</span>}
+                  {w} {workMap[w] && <span className="ml-1 text-xs" style={{ color: p.color }}>({workMap[w].length})</span>}
                 </span>
               </div>
             ))}
@@ -1079,7 +1080,7 @@ export default function App() {
 
   // Show spinner while Firebase resolves the session
   if (authLoading) return (
-    <div className="min-h-screen flex items-center justify-center" style={{ background: "#f6f2eb" }}>
+    <div className="flex items-center justify-center min-h-screen" style={{ background: "#f6f2eb" }}>
       <RefreshCw size={24} color="#c9a96e" className="animate-spin" />
     </div>
   );
@@ -1123,14 +1124,14 @@ export default function App() {
 
       <div className="min-h-screen" style={{ background: "#f6f2eb", color: "#2c2418" }}>
         {/* Ambient glow */}
-        <div className="fixed top-0 left-1/2 -translate-x-1/2 pointer-events-none" style={{ width: "80vw", height: "45vh", background: "radial-gradient(ellipse,rgba(201,169,110,0.1) 0%,transparent 70%)", zIndex: 0 }} />
+        <div className="fixed top-0 -translate-x-1/2 pointer-events-none left-1/2" style={{ width: "80vw", height: "45vh", background: "radial-gradient(ellipse,rgba(201,169,110,0.1) 0%,transparent 70%)", zIndex: 0 }} />
 
         <div className="relative" style={{ zIndex: 1 }}>
           {/* Header */}
-          <header className="sticky top-0 border-b flex items-center justify-between px-3 sm:px-6 py-3 sm:py-4" style={{ background: "rgba(246,242,235,0.94)", backdropFilter: "blur(12px)", borderColor: "#dfd7c9", zIndex: 10 }}>
+          <header className="sticky top-0 flex items-center justify-between px-3 py-3 border-b sm:px-6 sm:py-4" style={{ background: "rgba(246,242,235,0.94)", backdropFilter: "blur(12px)", borderColor: "#dfd7c9", zIndex: 10 }}>
             <button onClick={goHome} className="flex items-center gap-2" style={{ background: "none", border: "none", cursor: "pointer", padding: 0 }}>
               <BookOpen size={16} color="#8b6914" strokeWidth={1.5} />
-              <span className="text-xs tracking-widest uppercase font-semibold" style={{ color: "#8b6914" }}>Ancient Wisdom</span>
+              <span className="text-xs font-semibold tracking-widest uppercase" style={{ color: "#8b6914" }}>Ancient Wisdom</span>
             </button>
 
             {/* Breadcrumb */}
@@ -1147,7 +1148,7 @@ export default function App() {
             {/* User + sign out */}
             <div className="flex items-center gap-3">
               {!currentPhil && (
-                <span className="hidden sm:inline text-xs tracking-widest uppercase" style={{ color: "#b8a890" }}>{QUOTES.length} Aphorisms</span>
+                <span className="hidden text-xs tracking-widest uppercase sm:inline" style={{ color: "#b8a890" }}>{QUOTES.length} Aphorisms</span>
               )}
               {user && (
                 <div className="flex items-center gap-2">
@@ -1177,7 +1178,7 @@ export default function App() {
           }
 
           {/* Footer */}
-          <footer className="border-t py-7 text-center" style={{ background: "#fff", borderColor: "#dfd7c9" }}>
+          <footer className="text-center border-t py-7" style={{ background: "#fff", borderColor: "#dfd7c9" }}>
             <p className="text-xs tracking-widest uppercase" style={{ color: "#c4b49a" }}>
               Ancient Philosophy · 6th Century BC – 2nd Century AD · {QUOTES.length} Aphorisms · 9 Thinkers
             </p>
